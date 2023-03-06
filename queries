@@ -1,0 +1,50 @@
+Tasks are here: https://sql-academy.org/en/trainer?sort=byId
+Answers:
+
+task 10:
+SELECT * from Trip where time_out >= '1900-01-01T10:00:00.000' AND time_out <='1900-01-01T14:00:00.000';
+
+task 11:
+-- SELECT name from Passenger order by LENGTH(name) DESC limit 1;
+SELECT MAX(LENGTH(name)) from Passenger;
+SELECT name from Passenger WHERE LENGTH(name) = (SELECT MAX(LENGTH(name)) from Passenger);
+
+task 12:
+-- SELECT trip, count
+SELECT trip, count(passenger)as count FROM Pass_in_trip GROUP by trip;
+
+task 13:
+Select town_to from Trip join Pass_in_trip on Trip.id=Pass_in_trip.trip
+JOIN Passenger on Pass_in_trip.passenger=Passenger.id where name = 'Bruce Willis';
+
+
+task 14:
+Select town_to from Trip join Pass_in_trip on Trip.id=Pass_in_trip.trip
+JOIN Passenger on Pass_in_trip.passenger=Passenger.id where name = 'Bruce Willis';
+
+task 15:
+SELECT time_in from Trip join Pass_in_trip on Trip.id=Pass_in_trip.trip
+JOIN Passenger on Pass_in_trip.passenger=Passenger.id where name = 'Steve Martin' and town_to ='London';
+
+
+task 16:
+SELECT name, count(trip) as count FROM Passenger
+join Pass_in_trip on Pass_in_trip.passenger =Passenger.id
+GROUP by name
+HAVING count >0
+ORDER BY count DESC,name;
+
+
+task 17:
+SELECT member_name , status, SUM(amount*unit_price) as costs from FamilyMembers
+JOIN Payments on FamilyMembers.member_id = Payments.family_member
+where date BETWEEN '2005-01-01T00:00:00.000Z' AND '2006-01-01T00:00:00.000Z'
+GROUP BY family_member ;
+
+
+task 18:
+-- SELECT member_name from FamilyMembers
+-- where birthday  = (SELECT birthday from FamilyMembers ORDER BY birthday LIMIT 1);
+
+SELECT member_name from FamilyMembers
+where birthday  = (SELECT MIN(birthday) from FamilyMembers);
