@@ -68,3 +68,12 @@ HAVING count(good_name) > 1;
 
 task 22:
 SELECT member_name from FamilyMembers where status ='mother';
+
+task 23:
+SELECT good_name ,unit_price from Payments
+JOIN Goods on good=good_id where unit_price =
+(SELECT unit_price FROM FamilyMembers
+JOIN Payments on member_id =family_member
+JOIN Goods on good = good_id
+JOIN GoodTypes on type =good_type_id where good_type_name ='delicacies'
+ORDER BY unit_price Desc LIMIT 1);
