@@ -48,3 +48,8 @@ task 18:
 
 SELECT member_name from FamilyMembers
 where birthday  = (SELECT MIN(birthday) from FamilyMembers);
+
+task 19:
+SELECT DISTINCT status from FamilyMembers
+JOIN Payments on FamilyMembers.member_id=Payments.family_member
+JOIN Goods  on Payments.good = Goods.good_id where good_name = 'potato';
