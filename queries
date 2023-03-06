@@ -60,8 +60,11 @@ JOIN Payments on FamilyMembers.member_id =Payments.family_member
 JOIN Goods on Payments.good = Goods.good_id
 JOIN GoodTypes on Goods.type = GoodTypes.good_type_id where good_type_name = 'entertainment';
 
-task: 21:
+task 21:
 SELECT good_name from Payments
 JOIN Goods ON Payments.good=Goods.good_id
 GROUP BY good_name
 HAVING count(good_name) > 1;
+
+task 22:
+SELECT member_name from FamilyMembers where status ='mother';
