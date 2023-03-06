@@ -59,3 +59,9 @@ SELECT status, member_name,(amount*unit_price) as costs from FamilyMembers
 JOIN Payments on FamilyMembers.member_id =Payments.family_member
 JOIN Goods on Payments.good = Goods.good_id
 JOIN GoodTypes on Goods.type = GoodTypes.good_type_id where good_type_name = 'entertainment';
+
+task: 21:
+SELECT good_name from Payments
+JOIN Goods ON Payments.good=Goods.good_id
+GROUP BY good_name
+HAVING count(good_name) > 1;
