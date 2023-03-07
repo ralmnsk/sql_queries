@@ -77,3 +77,72 @@ JOIN Payments on member_id =family_member
 JOIN Goods on good = good_id
 JOIN GoodTypes on type =good_type_id where good_type_name ='delicacies'
 ORDER BY unit_price Desc LIMIT 1);
+
+task 24:
+SELECT member_name, SUM(amount*unit_price) as costs from FamilyMembers
+JOIN Payments on member_id = family_member
+WHERE date BETWEEN '2005-06-01T00:00:00.000Z' AND '2005-06-30T00:00:00.000Z'
+GROUP BY member_name ;
+
+task 25:
+SELECT good_name, unit_price from Payments
+JOIN Goods on Payments.good = Goods.good_id
+JOIN GoodTypes on Goods.type=GoodTypes.good_type_id where good_type_name ='delicacies'
+ORDER BY unit_price DESC LIMIT 1;
+
+Task 26
+Identify groups of products that were not purchased in 2005
+
+SELECT good_type_name from GoodTypes where good_type_name NOT IN
+(SELECT good_type_name FROM Payments
+JOIN Goods on good =good_id
+JOIN GoodTypes on good_type_id = type);
+
+
+Task 27
+Find out how much was spent on each of the product groups in 2005. Print the group name and amount
+Fields in the resulting table:
+good_type_name
+costs
+Use the "as costs" construction to display the amount spent on a specific product group. This is necessary for correct verification.
+
+SELECT good_type_name, SUM(amount*unit_price) as costs FROM Payments
+JOIN Goods on good =good_id
+JOIN GoodTypes on good_type_id = type
+where date BETWEEN '2005-01-01T00:00:00.000Z' AND '2006-01-01T00:00:00.000Z'
+GROUP BY good_type_name;
+
+
+
+Task 28
+How many trips were made by airlines from Rostov to Moscow ?
+Fields in the resulting table:
+count
+Use the "as count" construction for the aggregate function for counting the number of trips. This is necessary for correct verification.
+
+SELECT COUNT(*) as count FROM Trip WHERE town_from ='Rostov' AND town_to = 'Moscow';
+
+
+
+Task 29
+Print the names of passengers who flew to Moscow on TU-134
+Fields in the resulting table:
+name
+
+SELECT DISTINCT name  from Trip
+JOIN Pass_in_trip on Trip.id= Pass_in_trip.trip
+JOIN Passenger on Pass_in_trip.passenger = Passenger.id
+WHERE town_to = 'Moscow' AND plane = 'TU-134';
+
+
+
+Task 30
+6
+Output the load (number of passengers) of each trip . Output the result in sorted form in descending order of load.
+Fields in the resulting table:
+trip
+count
+
+SELECT trip, COUNT(*) AS count FROM Pass_in_trip
+GROUP BY Pass_in_trip.trip
+ORDER BY count DESC;
