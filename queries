@@ -146,3 +146,39 @@ count
 SELECT trip, COUNT(*) AS count FROM Pass_in_trip
 GROUP BY Pass_in_trip.trip
 ORDER BY count DESC;
+
+
+
+Task 31
+4
+Print all family members with the last name Quincey.
+Fields in the resulting table:
+*
+
+SELECT * FROM FamilyMembers WHERE member_name LIKE '%Quincey';
+
+
+
+Task 32
+4
+Display the average age of people (in years) stored in the database. The result is rounded to the nearest whole in the smaller side.
+
+
+WITH view as (SELECT DISTINCT member_name , birthday  FROM FamilyMembers)
+SELECT FLOOR(AVG(TIMESTAMPDIFF(YEAR,birthday,NOW()))) as age from view
+
+
+
+Task 58
+7
+Add a 5-star comment on housing located at 11218 Friel Place, New York on behalf of George Clooney
+As the primary key (id), specify the number of entries in the table + 1.
+The reservation of the room for which you need to leave a review has already been made, you just need to find it.
+
+INSERT INTO Reviews (id,reservation_id,rating ) VALUES ((SELECT MAX(id) from Reviews as R)+1,
+(SELECT DISTINCT id from Reservations
+where room_id =
+    (SELECT id from Rooms WHERE address = '11218, Friel Place, New York')
+AND   user_id =
+    (SELECT id from Users WHERE name = 'George Clooney'))
+,5);
